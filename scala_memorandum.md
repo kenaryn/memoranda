@@ -1,3 +1,10 @@
+# FP
+- Data are never modified, but only *transformed* from one format to another.
+- FP applications only consist of *immutable data* and *pure functions* (*i.e.* neither read or write from/to outside world, pure fonctions have no side effects).
+
+
+### Object companion / apply
+
 When you call `Foo(...)` with `Foo` being a class, you actually call the apply method on the companion object of `Foo`, 
 hence your code looks like:
 
@@ -28,6 +35,10 @@ for
 do
   [...]
 ```
+
+`for i <- expr do`  
+There is no `val` or `var` before the variable. Its type is the element type of the collection, 
+*e.g.* for i <- `1 to n` (`i` will be of `Range` type). The scope variable extends until the end of the loop.
 
 ### Eta expansion
 ```scala
@@ -66,3 +77,4 @@ A method only refers to a member of a class, trait or object.
 
 A function is declared at top-level scope outside a class, whereas nested functions are declared inside a block.
 With a recursive function, you must specify the return type.
+
