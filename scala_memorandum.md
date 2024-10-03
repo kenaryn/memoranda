@@ -1,7 +1,14 @@
 # FP
 - Data are never modified, but only *transformed* from one format to another.
-- FP applications only consist of *immutable data* and *pure functions* (*i.e.* neither read or write from/to outside world, pure fonctions have no side effects).
+- FP applications only consist of *immutable data* and *pure functions* (*i.e.* neither read or write from/to outside world, pure fonctions have no side effects, no hidden states issues, etc.).
+No pure function can modify a state outside its scope!   
+  
+- An impure function can return a different value each time it is called (*e.g.* prompt a user for his name).
 
+
+## Immutability
+Immutable objects are automatically **thread-safe** and have no race-conditions issues.
+Also, they can never exist in unknown or undesirable state because of an exception.
 
 ### Object companion / apply
 
@@ -39,6 +46,7 @@ do
 `for i <- expr do`  
 There is no `val` or `var` before the variable. Its type is the element type of the collection, 
 *e.g.* for i <- `1 to n` (`i` will be of `Range` type). The scope variable extends until the end of the loop.
+
 
 ### Eta expansion
 ```scala
@@ -78,3 +86,62 @@ A method only refers to a member of a class, trait or object.
 A function is declared at top-level scope outside a class, whereas nested functions are declared inside a block.
 With a recursive function, you must specify the return type.
 
+### CLI syntax
+scala-cli [command] [scala_cli_options | input]... -- [program_arguments]...
+
+
+### Eager / lazy evaluation
+A value is set whether or not you use it.
+Use `lazy val <name>` to defer initialization until it is accessed for the first time.
+Useful to delay costly initialization statements or deal with circular dependencies.
+
+A function's computation is deferred until you invoke it.
+
+`val words1`     : evaluated as soon as `words1` is defined
+`lazy val words2`: evaluated the first time `words2` is used
+`def words3`     : evaluated every time `words3` is used.
+
+
+### Recursivity
+```scala
+def sum(args: Int*): Int =
+    var result = 0
+    for arg <- args do result += arg
+    result
+
+def recursiveSum(args: Int*): Int =
+    if args.length == 0 then 0
+    else args.head + recursiveSum(args.tail*)
+``` 
+
+The recursive one is probably slower because by default varargs are `Arrays` and doing a `head` + `tail` on `Arrays` is very slow.
+If rather you used a `List` then both would be very equivalent.
+
+Ideally, you would not use any of those, but rather a more high-level solution like `sum`, `foldLeft`, or `cats combineAll`.
+
+But, just to answer, between recursion and loops, we usually recommend newcomers to stick with recursion so they get used **to thinking immutably**   .  After that, it is a mater of personal preference and code style.
+
+## Exceptions
+Could be an object of type either 
+- `Failure`, containing the exception that caused the computation to fail;
+- `Success`, holding the computation's result.
+
+### try / catch
+`try / catch` statement handles exceptions.
+`try / finally` takes some action (*e.g.* cleanup) whether or not an exception has occurred.
+
+
+### Property-based testing
+Because the output of a pure function depends only of its inputs, you can define some properties to those said functions.
+Hence, you can attack them with a vast range of inputs, which is commonly known as property-based testing. 
+See scalacheck.org
+
+
+### Function signature
+If a method is pure, it uses `Either`.
+If a method is effectful, it uses `ZIO`.
+
+
+### Collections
+Whenever I need to iterate over a collection, either use a functional method built into
+Scala collection classes or recursion.  wz
