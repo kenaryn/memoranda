@@ -1,5 +1,6 @@
 # FP
 - Data are never modified, but only *transformed* from one format to another.
+
 - FP applications only consist of *immutable data* and *pure functions* (*i.e.* neither read or write from/to outside world, pure fonctions have no side effects, no hidden states issues, etc.).
 No pure function can modify a state outside its scope!   
   
@@ -10,8 +11,8 @@ No pure function can modify a state outside its scope!
 Immutable objects are automatically **thread-safe** and have no race-conditions issues.
 Also, they can never exist in unknown or undesirable state because of an exception.
 
-### Object companion / apply
 
+### Object companion / apply
 When you call `Foo(...)` with `Foo` being a class, you actually call the apply method on the companion object of `Foo`, 
 hence your code looks like:
 
@@ -28,10 +29,12 @@ object Foo { // companion object of class Foo
 On a side note, you can inform the runtime to call extendions methods or implicit conversions to apply BigInt methods on a Int value
 without explicitly creating a BigInt instance.
 
+
 ### Shadowing
 Shadowing a variable is permitted, hence you can declare two variables'name identical in the same lexical scope.
 
-### for loop
+
+### for comprehension loop
 A definition in a for loop becomes a `val` automatically, hence, requires neither keyword `val` nor `var`. *e.g*
 
 ```scala
@@ -86,6 +89,7 @@ A method only refers to a member of a class, trait or object.
 A function is declared at top-level scope outside a class, whereas nested functions are declared inside a block.
 With a recursive function, you must specify the return type.
 
+
 ### CLI syntax
 scala-cli [command] [scala_cli_options | input]... -- [program_arguments]...
 
@@ -119,12 +123,14 @@ If rather you used a `List` then both would be very equivalent.
 
 Ideally, you would not use any of those, but rather a more high-level solution like `sum`, `foldLeft`, or `cats combineAll`.
 
-But, just to answer, between recursion and loops, we usually recommend newcomers to stick with recursion so they get used **to thinking immutably**   .  After that, it is a mater of personal preference and code style.
+But, just to answer, between recursion and loops, we usually recommend newcomers to stick with recursion so they get used **to thinking immutably**. After that, it is a matter of personal preference and code style.
+
 
 ## Exceptions
 Could be an object of type either 
 - `Failure`, containing the exception that caused the computation to fail;
 - `Success`, holding the computation's result.
+
 
 ### try / catch
 `try / catch` statement handles exceptions.
@@ -144,4 +150,28 @@ If a method is effectful, it uses `ZIO`.
 
 ### Collections
 Whenever I need to iterate over a collection, either use a functional method built into
-Scala collection classes or recursion.  wz
+Scala collection classes or recursion.
+
+
+### Algebra
+- Set: built-in and custom Scala types (*i.e.* nouns)
+- Operations: pure functions (*i.e.* verbs)
+"An algebra lets us talk about the objects and the operations abstractly, and to consider the laws that these operations obey as they operate on the underlying set." - Daniel Eklund
+
+- Algebraic equations are predictable, implying that algorithms based on functional programming are **deterministic**.
+
+
+### Arithmetic operations
+Arithmetic operations promote numeric type to `Int` level. Their result will also be an `Int`. You can convert back to a less-wide memory consuming memory type, like `Short`: `<int>.toShort`.
+
+
+# Update as you copy
+To use an object as a base to another object and never mutate a state, use `case class <object_name>` expression.
+It grants you the `copy` method, immutability and pattern matching capabilities.
+
+
+# Algebraic data types (ADT)
+ The "algebra" means "sums" and "products":
+
+  - "sum" is alternation (A | B, meaning A or B but not both)
+  - "product" is combination (A B, meaning A and B together)
