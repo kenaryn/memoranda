@@ -180,3 +180,39 @@ It grants you the `copy` method, immutability and pattern matching capabilities.
 
   - "Sum" is alternation (`A | B`, meaning A *XOR* B). *e.g.* discriminated union, variant, sum type. 
   - "Product" is combination (`A B`, meaning A *AND* B together). *e.g.* class, enum, struct.
+
+
+### Pipelines
+1. Unix pipeline: `who | cut -d ' ' -f1 | uniq | wc -l | tr -d ' '`
+
+2. Bash script
+```bash
+WHO=`who`
+RES1=`echo $WHO | cut -d ' ' -f1`
+RES2=`echo $RES1 | uniq`
+RES3=`echo $RES2 | wc -l`
+RES4=`echo $RES3 | tr -d ' '`
+echo $RES4
+```
+
+3. First pass of a Scala program
+```scala
+val who: Seq[String] = getUsers()  // impure function
+val res1 = cut(who, " ", 1)
+val res2 = uniq(res1)
+val res3 = countLines(res2)
+val res4 = trim(res3)
+println(res4)                      // statement
+```
+
+4. Combining expressions (thanks to referential transparency feature of pure functions): combinator
+Intermediate values are removed and their right-side expression are passed as argument to ther pure functions.
+`val nbUsers = println(trim(countLines(uniq(cut(getUsers, " ", 1)))))`
+
+5. Scala **combinator** final form (or **functional composition**)
+```scala
+val numUsers = who.cut(delimiter= " ", field=1)
+               .uniq
+               .wc(lines = true)
+               .tr(find=" ", replace="")
+```
