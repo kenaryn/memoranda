@@ -1,10 +1,15 @@
-# FP
+# Functional Programming (FP)
 - Data are never modified, but only *transformed* from one format to another.
 
 - FP applications only consist of *immutable data* and *pure functions* (*i.e.* neither read or write from/to outside world, pure fonctions have no side effects, no hidden states issues, etc.).
 No pure function can modify a state outside its scope!   
   
 - An impure function can return a different value each time it is called (*e.g.* prompt a user for his name).
+
+1. A series of transformer functions
+2. Data flows in only one direction
+3. Data are never modified
+4. Pure functions have one entrance and one exit (*i.e.* no hidden states nor outside-scoped values altered in the universe).
 
 
 ## Immutability
@@ -173,5 +178,5 @@ It grants you the `copy` method, immutability and pattern matching capabilities.
 # Algebraic data types (ADT)
  The "algebra" means "sums" and "products":
 
-  - "sum" is alternation (A | B, meaning A or B but not both)
-  - "product" is combination (A B, meaning A and B together)
+  - "Sum" is alternation (`A | B`, meaning A *XOR* B). *e.g.* discriminated union, variant, sum type. 
+  - "Product" is combination (`A B`, meaning A *AND* B together). *e.g.* class, enum, struct.
