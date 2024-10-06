@@ -209,7 +209,7 @@ println(res4)                      // statement
 Intermediate values are removed and their right-side expression are passed as argument to ther pure functions.
 `val nbUsers = println(trim(countLines(uniq(cut(getUsers, " ", 1)))))`
 
-5. Scala **combinator** final form (or **functional composition**)
+5. Scala **combinator** final form (or **functional composition**): a chain of functions applied to some data source.
 ```scala
 val numUsers = who.cut(delimiter= " ", field=1)
                .uniq
