@@ -1,9 +1,16 @@
 # Functional Programming (FP)
 - Data are never modified, but only *transformed* from one format to another.
 
-- FP applications only consist of *immutable data* and *pure functions* (*i.e.* neither read or write from/to outside world, pure fonctions have no side effects, no hidden states issues, etc.).
-No pure function can modify a state outside its scope!   
+- FP applications only consist of *immutable data* and *pure functions* (*i.e.* neither read or write from/to outside world.
+
+## Pure function
+- A pure fonctions cause no semantically observable side effects nor output, no hidden states issues, etc.).
+It can not read or modify a state outside its lexical scope (*viz.* outside world).
+- A pure function is total, *i.e.* always return a answer for any input and never throws an exception.
+
+*NB*: a hidden value is a variable accessed by a back door.
   
+## Impure / effectul function
 - An impure function can return a different value each time it is called (*e.g.* prompt a user for his name).
 
 1. A series of transformer functions
@@ -29,9 +36,11 @@ object Foo { // companion object of class Foo
 ```
 
 *e.g.* `BigInt(2).pow(1024)`
-*Nota bene* `BigInt(2)` is under the hood `BigInt.apply(2)`. "apply" means "this is how I'm used as a function" (like __call__ in python)
+*Nota bene* `BigInt(2)` is under the hood `BigInt.apply(2)`. "apply" means "this is how I'm used as a function" 
+(like __call__ in python)
 
-On a side note, you can inform the runtime to call extendions methods or implicit conversions to apply BigInt methods on a Int value
+On a side note, you can inform the runtime to call extendions methods or implicit conversions to apply BigInt methods 
+on a Int value
 without explicitly creating a BigInt instance.
 
 
@@ -64,7 +73,8 @@ val methods = List(isLessThan, isEven)
 
 def isLessThan(x: Short, y: Short): Boolean
 def isEven(x: Short): Boolean
-val methods: List[((Short, Short) => Boolean) | (Short => Boolean)] = List(rs$line$1$$$Lambda/0x0000007e01589000@1fec9d33, rs$line$1$$$Lambda/0x0000007e01588c00@372f7bc)
+val methods: List[((Short, Short) => Boolean) | (Short => Boolean)] = 
+  List(rs$line$1$$$Lambda/0x0000007e01589000@1fec9d33, rs$line$1$$$Lambda/0x0000007e01588c00@372f7bc)
 
 scala> methods(0)
 val res0: ((Short, Short) => Boolean) | (Short => Boolean) = Lambda/0x0000007e01589000@1fec9d33
@@ -78,7 +88,8 @@ You can not pattern match functions in general, not even haskell allows that.
 
 **Lists** are homogenous, which allows for helpful combinators like `map` and `filter` to apply to every element of the collection. 
 
-**Tuples** are heterogeneous, so the types in it are all tracked separately, which will allow you to call method(0)(4,1) and method(1)(3) respectively.
+**Tuples** are heterogeneous, so the types in it are all tracked separately, which will allow you to call `method(0)(4,1)` \
+and `method(1)(3)` respectively.
 
 
 ### Parenthesis and square brackets notations
@@ -128,7 +139,8 @@ If rather you used a `List` then both would be very equivalent.
 
 Ideally, you would not use any of those, but rather a more high-level solution like `sum`, `foldLeft`, or `cats combineAll`.
 
-But, just to answer, between recursion and loops, we usually recommend newcomers to stick with recursion so they get used **to thinking immutably**. After that, it is a matter of personal preference and code style.
+But, just to answer, between recursion and loops, we usually recommend newcomers to stick with recursion so they get \
+used **to thinking immutably**. After that, it is a matter of personal preference and code style.
 
 
 ## Exceptions
@@ -164,13 +176,15 @@ Scala collection classes or recursion.
 ### Algebra
 - Set: built-in and custom Scala types (*i.e.* nouns)
 - Operations: pure functions (*i.e.* verbs)
-"An algebra lets us talk about the objects and the operations abstractly, and to consider the laws that these operations obey as they operate on the underlying set." - Daniel Eklund
+"An algebra lets us talk about the objects and the operations abstractly, and to consider the laws that these operations \
+obey as they operate on the underlying set." - Daniel Eklund
 
 - Algebraic equations are predictable, implying that algorithms based on functional programming are **deterministic**.
 
 
 ### Arithmetic operations
-Arithmetic operations promote numeric type to `Int` level. Their result will also be an `Int`. You can convert back to a less-wide memory consuming memory type, like `Short`: `<int>.toShort`.
+Arithmetic operations promote numeric type to `Int` level. Their result will also be an `Int`. You can convert back to \
+a less-wide memory consuming memory type, like `Short`: `<int>.toShort`.
 
 
 # Update as you copy
@@ -219,6 +233,4 @@ val numUsers = who.cut(delimiter= " ", field=1)
                .wc(lines = true)
                .tr(find=" ", replace="")
 ```
-
-Arithmetic operations promote numeric type to `Int` level. Their result will also be an `Int`. You can convert back to a less-wide memory consuming memory type, like `Short`: `<int>.toShort`.
 
