@@ -137,6 +137,9 @@ Could be an object of type either
 - `Success`, holding the computation's result.
 
 
+An exception returns the special type `Nothing`, which resolves any type because it is a subtype of everything.
+It is called a **bottom type**.
+
 ### try / catch
 `try / catch` statement handles exceptions.
 `try / finally` takes some action (*e.g.* cleanup) whether or not an exception has occurred.
@@ -216,3 +219,6 @@ val numUsers = who.cut(delimiter= " ", field=1)
                .wc(lines = true)
                .tr(find=" ", replace="")
 ```
+
+Arithmetic operations promote numeric type to `Int` level. Their result will also be an `Int`. You can convert back to a less-wide memory consuming memory type, like `Short`: `<int>.toShort`.
+
