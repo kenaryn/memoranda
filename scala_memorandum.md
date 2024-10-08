@@ -9,14 +9,28 @@ It can not read or modify a state outside its lexical scope (*viz.* outside worl
 - A pure function is total, *i.e.* always return a answer for any input and never throws an exception.
 
 *NB*: a hidden value is a variable accessed by a back door.
-  
-## Impure / effectul function
-- An impure function can return a different value each time it is called (*e.g.* prompt a user for his name).
 
 1. A series of transformer functions
 2. Data flows in only one direction
 3. Data are never modified
 4. Pure functions have one entrance and one exit (*i.e.* no hidden states nor outside-scoped values altered in the universe).
+
+
+### Pure function's universe
+- Its input received through its front door
+- Its algorithm
+- The output it produces.
+
+  
+## Impure / effectul function
+- An impure function can return a different value each time it is called (*e.g.* prompt a user for his name).
+
+1. Read/write hidden inputs (*i.e.* variables not explicitly passed into the function's front door as input parameters)
+2. Mutate given parameters
+3. Mutate parameters outside the function local's cope
+4. Perform some sort of I/O with outside world.
+
+Either has no input parameters or return `Unit` type.
 
 
 ## Immutability
@@ -234,3 +248,5 @@ val numUsers = who.cut(delimiter= " ", field=1)
                .tr(find=" ", replace="")
 ```
 
+### REPL
+Each line is evaluated as a different compilation unit so what may look like a double definition, which is illegal behaviour, is in stead evaluated as a shadowing in a inner scope and thereforce, evaluates successfully to a result.
