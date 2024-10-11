@@ -203,6 +203,8 @@ a less-wide memory consuming memory type, like `Short`: `<int>.toShort`.
 
 ## Update as you copy / case classes
 To use an object as a base to another object and never mutate a state, use `case class <object_name>` expression.
+Case classes use `val` fields by default.
+
 It grants you the following benefits:
 - `copy` method (useful to clone an object)
 - immutability
