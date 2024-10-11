@@ -121,7 +121,7 @@ With a recursive function, you must specify the return type.
 
 
 ### CLI syntax
-scala-cli [command] [scala_cli_options | input]... -- [program_arguments]...
+scala-cli <command> [scala_cli_options / input]... -- <program_arguments>...
 
 
 ### Eager / lazy evaluation
@@ -202,6 +202,7 @@ a less-wide memory consuming memory type, like `Short`: `<int>.toShort`.
 
 
 ## Update as you copy / case classes
+In FP, you create new objects with updated fields based on existing objects.
 To use an object as a base to another object and never mutate a state, use `case class <object_name>` expression.
 Case classes use `val` fields by default.
 
@@ -265,3 +266,9 @@ Each line is evaluated as a different compilation unit so what may look like a d
 ## Error-handling
 - Use `Option` data type when you care not about error messages, because you know what is going to be.
 - Use `Either` or `Try` when exceptions can occur, such as accessing internet resources, DB and files.
+
+
+### Single modules in Scala
+- Trait with Object
+- Singleton Object: an object is a singleton, meaning that there is exactly *one instance* of it.
+- Top-level definition
