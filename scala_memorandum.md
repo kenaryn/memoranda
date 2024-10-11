@@ -201,9 +201,15 @@ Arithmetic operations promote numeric type to `Int` level. Their result will als
 a less-wide memory consuming memory type, like `Short`: `<int>.toShort`.
 
 
-# Update as you copy
+## Update as you copy / case classes
 To use an object as a base to another object and never mutate a state, use `case class <object_name>` expression.
-It grants you the `copy` method, immutability and pattern matching capabilities.
+It grants you the following benefits:
+- `copy` method
+- immutability
+- pattern matching capabilities
+- `apply` method (hence, no need to use `new` keyword)
+- `unapply` method
+- **accessor** methods.
 
 
 # Algebraic data types (ADT)
@@ -250,3 +256,8 @@ val numUsers = who.cut(delimiter= " ", field=1)
 
 ### REPL
 Each line is evaluated as a different compilation unit so what may look like a double definition, which is illegal behaviour, is in stead evaluated as a shadowing in a inner scope and thereforce, evaluates successfully to a result.
+
+
+## Error-handling
+- Use `Option` data type when you care not about error messages, because you know what is going to be.
+- Use `Either` or `Try` when exceptions can occur, such as accessing internet resources, DB and files.
