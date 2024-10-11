@@ -204,12 +204,14 @@ a less-wide memory consuming memory type, like `Short`: `<int>.toShort`.
 ## Update as you copy / case classes
 To use an object as a base to another object and never mutate a state, use `case class <object_name>` expression.
 It grants you the following benefits:
-- `copy` method
+- `copy` method (useful to clone an object)
 - immutability
 - pattern matching capabilities
 - `apply` method (hence, no need to use `new` keyword)
-- `unapply` method
-- **accessor** methods.
+- `unapply` method (the class implementing it is called an **extractor**, which enable match/case expressions)
+- *accessor* methods
+- `equals` and `hashCode` methods (can perform `==` comparison between objects)
+- `toString` method (useful for debugging).
 
 
 # Algebraic data types (ADT)
