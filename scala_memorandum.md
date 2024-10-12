@@ -21,6 +21,19 @@ It can not read or modify a state outside its lexical scope (*viz.* outside worl
 - Its algorithm
 - The output it produces.
 
+
+## Error-handling
+- Use `Option` data type when you care not about error messages, because you know what is going to be.
+- Use `Either` or `Try` when exceptions can occur, such as accessing internet resources, DB and files.
+
+
+## Scope
+A top-level definition is scoped to a special invisible object, which matters for *opaque types*.
+Hence, a `foo()` invocation is `special$object.foo()` (the actual name is `finalename$package`, but that is an implementation detail).
+
+
+## REPL
+Each line is evaluated as a different compilation unit so what may look like a double definition, which is illegal behaviour, is in stead evaluated as a shadowing in a inner scope and thereforce, evaluates successfully to a result.
   
 ## Impure / effectul function
 - An impure function can return a different value each time it is called (*e.g.* prompt a user for his name).
@@ -258,16 +271,17 @@ val numUsers = who.cut(delimiter= " ", field=1)
                .tr(find=" ", replace="")
 ```
 
-### REPL
-Each line is evaluated as a different compilation unit so what may look like a double definition, which is illegal behaviour, is in stead evaluated as a shadowing in a inner scope and thereforce, evaluates successfully to a result.
-
-
-## Error-handling
-- Use `Option` data type when you care not about error messages, because you know what is going to be.
-- Use `Either` or `Try` when exceptions can occur, such as accessing internet resources, DB and files.
-
 
 ### Single modules in Scala
 - Trait with Object
 - Singleton Object: an object is a singleton, meaning that there is exactly *one instance* of it.
 - Top-level definition
+
+
+### Terminology
+- `def` keyword means *method*
+- `=>` thick arrow means *function*
+
+
+### Currying
+`2 + 3` is semantically equivalent to the `+` method on the `2` object then passing the `3` object as its argument.
