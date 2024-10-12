@@ -53,9 +53,8 @@ object Foo { // companion object of class Foo
 *Nota bene* `BigInt(2)` is under the hood `BigInt.apply(2)`. "apply" means "this is how I'm used as a function" 
 (like __call__ in python)
 
-On a side note, you can inform the runtime to call extendions methods or implicit conversions to apply BigInt methods 
-on a Int value
-without explicitly creating a BigInt instance.
+On a side note, you can inform the runtime to call extensions methods or implicit conversions to apply `BigInt` methods 
+on a `Int` value without explicitly creating a `BigInt` instance.
 
 
 ### Shadowing
