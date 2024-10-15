@@ -285,3 +285,52 @@ val numUsers = who.cut(delimiter= " ", field=1)
 
 ### Currying
 `2 + 3` is semantically equivalent to the `+` method on the `2` object then passing the `3` object as its argument.
+
+
+### Predef / standard library
+`Predef` is a bunch of types and functions that need not a import.
+
+
+## ZIO
+### ZIO types
+Type aliases to simplify:
+- `ZIO[Any, Nothing, Int]` == `UIO[Int]`
+- `ZIO[Any, Throwable, Int]` == `Task[Int]`
+- `ZIO[Any, CustomError, Int]` == `IO[CustomError, Int]`
+
+*NB*: [R, E, A]::=  R: environment type (with possible dependencies). E: error type. A: success type.
+
+### ZIO conceptual model
+`ZIO[Connection, String, Int]` == `f(Connection) => Either[String, Int]`
+
+
+### Benchmark
+Comparison between `toInt` and `toIntOption` which consumes the object without needing to handle an exception:
+```scala
+val valid = "123456789"
+val invalid = "123456asd"
+
+def benchmark[T](times: Int)(f: () => T): Long = {
+  var i = times
+  val start = System.currentTimeMillis
+  while (i >= 0) {
+    try{
+      f()
+    } catch {case _ => ()}
+    i = i - 1
+  }
+  System.currentTimeMillis - start
+}
+
+println(benchmark(1000000)(() => valid.toInt))          // 59
+println(benchmark(1000000)(() => valid.toIntOption))    // 78
+println(benchmark(1000000)(() => invalid.toInt))        // 3039
+println(benchmark(1000000)(() => invalid.toIntOption))  // 74
+```
+
+### Lexikon
+- Composable: combine small proven parts to create a larger rock-solid system.
+
+
+### Nothing / exception
+`Nothing` is a bottom type, which means a subtype of all other types.
