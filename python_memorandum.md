@@ -36,5 +36,14 @@ Thy file shouldth appear in that list.
 
 6. Be warned that when thou hadth already called a function from the module using the REPL, that said name remains in the REPL's namespace even after reloading.
 
-Either re-import the module by typing: `from myfile import <new_function_name>` \
+That is why thou need to either re-import the module by typing: `from myfile import <new_function_name>` \
 Or use the dot notation: `<myfile>.<new_function_name>`
+
+Apply that solution ùùeach time thou adds a new function or change its signature** in the source code.
+
+
+### Type annotations
+Keep in mind that type annotations in Python are merely hints and enforce not any type checking at runtime. Use mypy, pyright or Pytype to validate those annotations.
+
+Thou can postpone the annotation's evaluation to avoid forward references issues and improve the program's start up time:
+`from __future__ import annotations`
