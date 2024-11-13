@@ -1,6 +1,10 @@
 ## Import a file in the REPL
-`python -i <myfile.py>`
-`import myfile`
+Thou can load `python -i <myfile.py>` [//]: # (Both execute content's file and drop into REPL mode)
+
+```python
+python -i
+import myfile
+```
 
 ### Reload that loaded file
 
