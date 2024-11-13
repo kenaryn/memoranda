@@ -4,7 +4,11 @@ As a side note, thou can load `python -i <myfile.py>` [//]: # (Both execute cont
 ```python
 python -i
 import myfile
+from myfile import *
 ```
+
+*N.B.*: it is necessary to imports the symbols after having actually imported the file.
+
 
 ### Reload that file
 
