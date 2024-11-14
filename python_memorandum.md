@@ -1,26 +1,32 @@
 ## Import a file in the REPL
 As a side note, thou can load `python -i <myfile.py>` [//]: # (Both execute content's file and drop into REPL mode). Now type this:
 
-```python
-python -i
-import myfile
-from myfile import *
-```
-
-*N.B.*: it is necessary to imports the symbols after having actually imported the file.
+[//]: <> (Execute file's content then remains in interactive mode)
+`ipython -i <filename.py>`
 
 
-### Reload that file
-
+### Load a file after having run the enhanced interpreter
 1. After having applied some modifications to the source code, type the following:
+`%run <filename.py>`
+
+However, ipython will execute the script in a separate temporary namespace, meaning that all your symbols created during
+your current session will not be affected by said script.
+
+2. Running `%run -i <filename.py>` will made available thy symbols to the script during its execution.
+
+
+### Reset thy namespace
+Running the following ensures that thou run the script in a clean slate while preserving access to pre-loaded libraries
+and symbols created in the previous interactive session.
 ```python
-import importlib
-importlib.reload(myfile)
+%reset -f
+%run -i <filename.py>
 ```
 
-*N.B.*: be cautious to not attempt to reload the actual file but the **module object** (*i.e.* without specifying the `.py` extension).
 
-2. In the case where the loading seems to having failed or having returned an error like `TypeError: reload() argument must be a module`, try out to diagnose whether the file hadth actually been loaded:
+### Trouble shooting
+1. In the case where the loading seems to having failed or having returned an error like `TypeError: reload() argument \
+must be a module`, try out to diagnose whether the file hadth actually been loaded:
 
 ```python
 import sys
@@ -48,7 +54,3 @@ Apply that solution each time thou adds a new function or change its signature**
 
 ### Type annotations
 Keep in mind that type annotations in Python are merely hints and enforce not any type checking at runtime. Use mypy, pyright or Pytype to validate those annotations.
-
-[//]: <> Deprecated in Python 3.14 (alpha2 scheduled 2024-11-19)
-Thou can postpone the annotation's evaluation to avoid forward references issues and improve the program's start up time:
-`from __future__ import annotations`.
