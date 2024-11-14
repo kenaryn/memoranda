@@ -43,11 +43,12 @@ Thy file shouldth appear in that list.
 That is why thou need to either re-import the module by typing: `from myfile import <new_function_name>` \
 Or use the dot notation: `<myfile>.<new_function_name>`
 
-Apply that solution ùùeach time thou adds a new function or change its signature** in the source code.
+Apply that solution each time thou adds a new function or change its signature** in the source code.
 
 
 ### Type annotations
 Keep in mind that type annotations in Python are merely hints and enforce not any type checking at runtime. Use mypy, pyright or Pytype to validate those annotations.
 
+[//]: <> Deprecated in Python 3.14 (alpha2 scheduled 2024-11-19)
 Thou can postpone the annotation's evaluation to avoid forward references issues and improve the program's start up time:
-`from __future__ import annotations`
+`from __future__ import annotations`.
