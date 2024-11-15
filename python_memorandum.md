@@ -57,4 +57,4 @@ Keep in mind that type annotations in Python are merely hints and enforce not an
 
 
 ### List comprehension with filter
-`[<expression>(v) in <sequence> if <condition>(v)]`
+`[<expression>(v) for v in <sequence> if <condition>(v)]`
