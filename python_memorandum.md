@@ -54,3 +54,7 @@ Apply that solution each time thou adds a new function or change its signature**
 
 ### Type annotations
 Keep in mind that type annotations in Python are merely hints and enforce not any type checking at runtime. Use mypy, pyright or Pytype to validate those annotations.
+
+
+### List comprehension with filter
+`[<expression>(v) in <sequence> if <condition>(v)]`
