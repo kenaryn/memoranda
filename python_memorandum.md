@@ -56,7 +56,22 @@ Apply that solution each time thou adds a new function or change its signature**
 Keep in mind that type annotations in Python are merely hints and enforce not any type checking at runtime. Use mypy, pyright or Pytype to validate those annotations.
 
 
-## Lexikon
+### List comprehension with filter
+`[<expression>(v) for v in <sequence> if <condition>(v)]`
 
+
+### Extended iterable unpacking
+Unpacking an empty list returns an empty tuple.
+`[*[]]` returns `Unit` inside the list, hence `[]`
+`{*[]}` returns `set()`
+`(*[],)` returns `()` (*viz.* `Unit`)
+
+`n, *m`  = [3] [//]: <> (a, = 3, b = []) It would have raised an `ValueError` as not enough values were to be unpacked.
+`*a, = []` [//]: <> (a = [])
+
+Empty list's unpacking is allowed in *tuple, set and list* constructions.
+
+
+## Lexikon
 ### API
 An API is where developers and computers connect.
