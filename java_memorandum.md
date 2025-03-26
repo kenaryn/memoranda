@@ -1,5 +1,23 @@
+### Installing/updating OpenJDK
+```
+cd ~/Downloads
+curl -fsSL https://download.java.net/java/GA/jdk24/1f9ff9062db4449d8ca828c504ffae90/36/GPL/openjdk-<version>_linux-x64_bin.tar.gz
+sudo tar xzf openjdk-<version>_linux-x64_bin.tar.gz -C /usr/lib/jvm
+cd /usr/lib/jvm
+sudo mv jdk-24 openjdk24
+sed -i "set-env JAVA_HOME ‘/usr/lib/jvm/openjdk24/’" $E:HOME/.config/elvish/rc.elv
+sed -i "set-env LD_LIBRARY ‘/usr/lib/jvm/openjdk24/lib/server’" $E:HOME/.config/elvish/rc.elv
+elvish (to regenerate running_command file from the current interactive shell emulator session)
+set paths = [$E:JAVA_HOME/bin $@paths]
+java --version
+rm -v ~/Downloads/openjdk*.tar.gz
+```
+*Nota bene*: `xbps-alternatives -l -g jdk` reports only those packages who were installed via the xbps package manager
+
+
 ### Static class
-A static class is NOT instantiated to call its method. At least one static method causes the class it belongs to to be static.
+A static class is NOT instantiated to call its method. At least one static method causes the class it belongs to to be 
+static.
 
 
 ### power
@@ -106,8 +124,9 @@ There is **only one copy of fields (or instance variables) per class**.
 Use `static` keyword to declare a class member, **shared by all instances** of the class. You have not to create an object
 instance to access the `static` class' members.
 
-*Nota bene*: a instance variable has its contents initialized in a constructor whereas a class variable's value is 
+- *Nota bene*: an instance variable has its contents initialized in a constructor whereas a class variable's value is 
 is computed in a static (*i.e.* class) initializer.
+- *Addendum*: keep on an eye on **deferred immutability** of `StableValue` new type introduced in Java 25.
 
 
 2. Object
