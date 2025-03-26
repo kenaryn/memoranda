@@ -106,6 +106,9 @@ There is **only one copy of fields (or instance variables) per class**.
 Use `static` keyword to declare a class member, **shared by all instances** of the class. You have not to create an object
 instance to access the `static` class' members.
 
+*Nota bene*: a instance variable has its contents initialized in a constructor whereas a class variable's value is 
+is computed in a static (*i.e.* class) initializer.
+
 
 2. Object
 An object is an in-memory representation of your class. \
@@ -119,6 +122,10 @@ Each parameter of a record is implicitly private and immutable (*i.e.* `final`).
 components/fields.
 Records are `final` special classes which extend `java.lang.Record` and act as a mere carrier of data.
 They hold built-in methods `toString()`, `equals()`, `hashCode()` and an automatically generated canonical constructor.
+
+**Immutability shall be encouraged as an immutable object can only be in one state and therefore can be shared
+freely across multiple threads.**
+
 
 ### User input
 In order to avoid buffering and other unexpected miseries, favour `Integer.parseInt(scanner.nextLine())` over 
