@@ -63,6 +63,8 @@ An array is a data structure of **object** type that stores a fixed-size, ordere
 Those elements are stored in contiguous memory locations.
 `Arrays` type provide access to sorting and searching methods.
 
+`ArrayList<String>`'s instance is mutable conversely to `List.of()` or `List.copyOf()`.
+
 
 ## Syntactic sugar
 1. Type inference
@@ -116,6 +118,7 @@ You need to create an object instance to refer to an instance member when in a `
 Each parameter of a record is implicitly private and immutable (*i.e.* `final`). Hence, no setters for the 
 components/fields.
 Records are `final` special classes which extend `java.lang.Record` and act as a mere carrier of data.
+They hold built-in methods `toString()`, `equals()`, `hashCode()` and an automatically generated canonical constructor.
 
 ### User input
 In order to avoid buffering and other unexpected miseries, favour `Integer.parseInt(scanner.nextLine())` over 
