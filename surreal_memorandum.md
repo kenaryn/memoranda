@@ -12,7 +12,8 @@ Add the dependency into the project within `pom.xml` and download the package an
 </dependencies>
 ```
 [sudo xbps-install -S apache-maven;] mvn clean install
-Check if surrealdb-<version>.jar file is present: `ls ~/.m2/repository/com/surrealdb/surrealdb/<version>`
+- Check if surrealdb-<version>.jar file is present: `ls ~/.m2/repository/com/surrealdb/surrealdb/<version>`
+- Click Build/Rebuild project
 
 *Nota bene*: `.jar` stands for 'Java archive" and aggregates classes, metadata and hypermedia resources. 
 Jar file's format are intended for distribution.
