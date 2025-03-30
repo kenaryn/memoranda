@@ -67,6 +67,9 @@ proceed with a explicit cast if the value is included in the allowed range of th
 - record
 - array.
 
+### Utilitary method
+Make the methods static and call them with unary operator in stead of the resolution scope one. Indeed, the latter 
+specifies a method reference acting as a λ-like entity. Hence: `<class>.<static_method>`
 
 ### Wrapper types
 Each numeric primitive type has a corresponding class that provide useful methods to (for example) perform arithmetic.
@@ -82,6 +85,24 @@ Those elements are stored in contiguous memory locations.
 `Arrays` type provide access to sorting and searching methods.
 
 `ArrayList<String>`'s instance is mutable conversely to `List.of()` or `List.copyOf()`.
+
+
+### Switch
+Use `yield <value>` to yield an arm result in a `switch`'s block as the last statement. *e.g.*
+`case 6 -> {
+    logger.log(Level.INFO, "User has failed 3 times before succeeding the authentication");
+    yield "Welcome, back!";
+}`
+
+*Nota bene*: a `return` statement is disallowed in a arm in order to avoid confusion with the `return` encompassing 
+switch expression.
+
+- The computational complexity to look up the arm's evaluation is constant (*i.e.* O(1)) as opposed to linear 
+(*viz.* O(n)) for a worse case scenario in an if-else statement.
+ 
+- Use total type pattern in stead of the default case to gracefully handle null references (which raise 
+`NullPointerException`) and causes the last arm to be flexible by supporting the full hierarchy of the object passed to
+the switch mechanism.
 
 
 ## Syntactic sugar
@@ -137,17 +158,21 @@ You need to create an object instance to refer to an instance member when in a `
 
 
 3. Record
-Each parameter of a record is implicitly private and immutable (*i.e.* `final`). Hence, no setters for the 
+- Each parameter of a record is implicitly private and immutable (*i.e.* `final`). Hence, no setters for the 
 components/fields.
-Records are `final` special classes which extend `java.lang.Record` and act as a mere carrier of data.
-They hold built-in methods `toString()`, `equals()`, `hashCode()` and an automatically generated canonical constructor.
+- Records are `final` special classes which extend `java.lang.Record` and act as a mere carrier of data. 
+- They are NOT intended to convey domain's abstractions with extensive behaviour.
+- They hold built-in methods `toString()`, `equals()`, `hashCode()` and an automatically generated canonical constructor.
+
+*Hint*: write your own compact constructor if you need to transform, validate and/or cleanse data and leave the 
+fields' initialization to the canonical one.
 
 **Immutability shall be encouraged as an immutable object can only be in one state and therefore can be shared
 freely across multiple threads.**
 
 
 ### User input
-In order to avoid buffering and other unexpected miseries, favour `Integer.parseInt(scanner.nextLine())` over 
+In order to avoid buffering issues and other unexpected miseries, favour `Integer.parseInt(scanner.nextLine())` over 
 `scanner.nextInt()`.
 
 
@@ -158,9 +183,16 @@ Using `lavap -v <filename>`:
 - new: the compiler initializes a reference.
 
 
+### Sealed
+Whatever is marked as `sealed`, it requires at least one derived class or interface, hence re-opening a hierarchy for
+at least one more level of extension.
+`non-sealed` keyword basically tells the compiler: "the hierarchy is closed everywhere, except right here."
+
+
 ### Lexikon
 - API: a suite of pre-defined types.
 - Encapsulation: data abstraction (using access modifiers).
+- Expression: as opposed to statements, performs computations and return a result. 
 - Functional interface: provides target types for λ expressions and method references. Holds a single abstract method.
 - Member: field or method.
 - Package: a named group of related types (*i.e.* class, record, enum, interface).
@@ -173,4 +205,5 @@ Using `lavap -v <filename>`:
         - intermediate operations
         - an eager terminal operation which produces a value or a side-effect.
       Each intermediate operation returns a new stream but evaluation triggered only when terminal operation invoked.
+- tuple: an immutable data structure of a finite ordered sequence of item. 
 - `var`: context sensitive term. Neither a type nor an universal keyword.
