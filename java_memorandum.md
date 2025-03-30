@@ -1,4 +1,4 @@
-### Installing/updating OpenJDK
+# Installing/updating OpenJDK
 ```
 cd ~/Downloads
 curl -fsSL https://download.java.net/java/GA/jdk24/1f9ff9062db4449d8ca828c504ffae90/36/GPL/openjdk-<version>_linux-x64_bin.tar.gz
@@ -13,6 +13,10 @@ java --version
 rm -v ~/Downloads/openjdk*.tar.gz
 ```
 *Nota bene*: `xbps-alternatives -l -g jdk` reports only those packages who were installed via the xbps package manager
+
+## Installing minimal runtime
+In order to shrink deployment size of the Java applicative layer, run:
+`jlink --add-modules java.base --output <minimal_runtime_path>`
 
 
 ### Static class
@@ -189,11 +193,16 @@ at least one more level of extension.
 `non-sealed` keyword basically tells the compiler: "the hierarchy is closed everywhere, except right here."
 
 
+### Error redirection
+Declare into the entry-point `System.setErr(System.out);` to redirect error canal towards the standard output one.
+
+
 ### Lexikon
 - API: a suite of pre-defined types.
 - Encapsulation: data abstraction (using access modifiers).
 - Expression: as opposed to statements, performs computations and return a result. 
 - Functional interface: provides target types for λ expressions and method references. Holds a single abstract method.
+- Guarded pattern: conditional arm.
 - Member: field or method.
 - Package: a named group of related types (*i.e.* class, record, enum, interface).
 - Programming: forming good abstractions and putting things together to minimize complexity.
