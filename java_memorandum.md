@@ -108,6 +108,25 @@ switch expression.
 `NullPointerException`) and causes the last arm to be flexible by supporting the full hierarchy of the object passed to
 the switch mechanism.
 
+```
+public static boolean processTrade(Trade trade) {
+    return switch(trade) {
+    case Buy buy -> performPurchase(// ...);
+    case Sell sell -> performSell(// ...);
+}
+```
+In the above snippet, the arm traversed bind the `buy` named reference to the `trade` instance.
+
+
+### Modularization
+Java modules let the architects clearly define subsystems' boundaries and govern dependencies between modules.
+Modules allow you to examine metadata through tests to check if the application meet its architectural specifications.
+
+Each module - written as `module-info.java` located at the directory source's root - can perform 3 things:
+1. Define a (possibly compounded) module's name
+2. `exports` one or more package(s)
+3. `requires` one or more module(s)
+
 
 ## Syntactic sugar
 1. Type inference
@@ -199,11 +218,13 @@ Declare into the entry-point `System.setErr(System.out);` to redirect error cana
 
 ### Lexikon
 - API: a suite of pre-defined types.
+- Destructuring: create a local variable with values extracted from an object. 
 - Encapsulation: data abstraction (using access modifiers).
 - Expression: as opposed to statements, performs computations and return a result. 
 - Functional interface: provides target types for λ expressions and method references. Holds a single abstract method.
 - Guarded pattern: conditional arm.
 - Member: field or method.
+- Module: a set of packages well encapsulated and designed for reuse.
 - Package: a named group of related types (*i.e.* class, record, enum, interface).
 - Programming: forming good abstractions and putting things together to minimize complexity.
 - Reference: variable, field (of a class), or component (or a record)
