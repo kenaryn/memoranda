@@ -118,14 +118,31 @@ public static boolean processTrade(Trade trade) {
 In the above snippet, the arm traversed bind the `buy` named reference to the `trade` instance.
 
 
-### Modularization
+## Modularization
 Java modules let the architects clearly define subsystems' boundaries and govern dependencies between modules.
 Modules allow you to examine metadata through tests to check if the application meet its architectural specifications.
 
-Each module - written as `module-info.java` located at the directory source's root - can perform 3 things:
+A given module - written as `module-info.java` located at the directory source's root - can perform 3 things:
 1. Define a (possibly compounded) module's name
 2. `exports` one or more package(s)
 3. `requires` one or more module(s)
+
+*Nota bene*: each module implicitly relies on `java.base@<jdk_version>` built-in module.
+Run `java --list-modules` in CLI to print the full list of modules shipped with your JDK.
+
+Classes made public are actually so iif the package whose they belong it is marked in the module descriptor as: 
+- `exports` at **compile-time**.
+- `opens` at **runtime**.
+
+Extract metadata using `jar -d -f <.jar>` to check out what is in this module, who has access to it and which modules
+are actually used?
+**Modularization helps you shrinking the deployment footprint** of your application.
+
+
+### Modularization's principles
+- Reuse-release equivalency: no dependencies over packages or parts of modules
+- Single responsibility: each module is treated as a cohesive unit. Hence, no splitting permitted
+- Acyclic dependency: each cyclic dependency (*viz.* bi-lateral requiring) causes a compilation failure.
 
 
 ## Syntactic sugar
