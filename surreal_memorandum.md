@@ -16,7 +16,7 @@ Add the dependency into the project within `pom.xml` and download the package an
 - Click Build/Rebuild project
 
 *Nota bene*: `.jar` stands for 'Java archive" and aggregates classes, metadata and hypermedia resources. 
-Jar file's format are intended for distribution.
+Jar file's format is intended for distribution.
 
 
 2. Package and import

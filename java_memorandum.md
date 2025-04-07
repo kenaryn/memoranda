@@ -19,6 +19,12 @@ In order to shrink deployment size of the Java applicative layer, run:
 `jlink --add-modules java.base --output <minimal_runtime_path>`
 
 
+# Data structures
+- List: ordered collection of data
+- Stream: order may be imposed by the source of data, a prior or subsequent step in the functional pipeline.
+    Use `<data_source>.parallelStream()` if you want to possibly return a stream run in parallel for performance concerns.
+
+
 ### Static class
 A static class is NOT instantiated to call its method. At least one static method causes the class it belongs to to be 
 static.
@@ -128,7 +134,9 @@ A given module - written as `module-info.java` located at the directory source's
 3. `requires` one or more module(s)
 
 *Nota bene*: each module implicitly relies on `java.base@<jdk_version>` built-in module.
-Run `java --list-modules` in CLI to print the full list of modules shipped with your JDK.
+- Run `java --list-modules` in CLI to print the full list of modules shipped with your JDK.
+- Follow this nomenclature: `java -m <module>/<package>.<class>` (`main()` class is called implicitly)
+
 
 Classes made public are actually so iif the package whose they belong it is marked in the module descriptor as: 
 - `exports` at **compile-time**.
@@ -141,7 +149,8 @@ are actually used?
 
 ### Modularization's principles
 - Reuse-release equivalency: no dependencies over packages or parts of modules
-- Single responsibility: each module is treated as a cohesive unit. Hence, no splitting permitted
+- Single responsibility: each module is treated as a cohesive unit. Hence, no splitting permitted, that is no part
+of the module acting differently than the rest.
 - Acyclic dependency: each cyclic dependency (*viz.* bi-lateral requiring) causes a compilation failure.
 
 
@@ -229,6 +238,47 @@ at least one more level of extension.
 `non-sealed` keyword basically tells the compiler: "the hierarchy is closed everywhere, except right here."
 
 
+## Stream interface - Functional pipelines
+A stream, implemented in `java.lang.stream`, is an API designed for λ expressions, lazily computed, potentially 
+unbounded sequence of values.
+
+A stream can be processed sequentially or in parallel. It is composed of:
+1. a source of elements
+
+2. intermediate operations: their evaluation is lazy, hence their execution is triggered by a terminal operation's call.
+Each one of them returns a new stream. 
+    *e.g.* `filter()`, `map()`, `limit()`, `takeWhile()`, `dropWhile()`, `Gatherers.{fold(), scan(), windowFixed(), 
+windowSliding}`
+
+3. eager terminal operation which produces a value or a side-effect. *e.g.* `forEach()`, `sum()`, `count()`, `reduce()`,
+`findAny()`, `findFirst()`, `forEachOrdered()` (do preserve the order imposed by a data source or a prior step).
+A terminal operation consumes the stream and return no thing (*viz.* `void`)!
+
+4. Parametrized types
+- T: the returned stream's consumed type
+- A: the state's type
+- R: the returned stream's produced type
+
+As a reminder, intermediate operations `fold()` and `peek()` as respectivement equivalent to terminal operations
+`reduce()` and `forEach()`.
+
+
+### Understanding specialized/base types
+- `Class<? extends <myClass> klass`: a derived class of <myClass>
+- `<Interface><? super T>`: generic type T or one of its base types.
+
+
+### Gatherer
+Implementation of `Gatherer` functional interface, like so `Gatherer<? super T, ?, T`>: element type, state type, result type
+
+Custom gatherers which perform intermediate operations may be stateless/stateful and sequential/parallel.
+The most complex kind of gatherer is a parallelizable stateful one. It is composed of four phases:
+1. Initialization
+2. Integration: update a given element's state
+3. Combine: merge multiple partial states
+4. Finish: take the collective state and push it downstream.
+
+
 ### Error redirection
 Declare into the entry-point `System.setErr(System.out);` to redirect error canal towards the standard output one.
 
@@ -246,11 +296,5 @@ Declare into the entry-point `System.setErr(System.out);` to redirect error cana
 - Programming: forming good abstractions and putting things together to minimize complexity.
 - Reference: variable, field (of a class), or component (or a record)
 - Static typing: relates to type verification and not type specification.
-- Stream: `java.lang.stream` API designed for λ expressions. Lazily computed, potentially unbounded sequence of values.
-      A stream can be processed sequentially or in parallel. It is composed of:
-        - a source of elements
-        - intermediate operations
-        - an eager terminal operation which produces a value or a side-effect.
-      Each intermediate operation returns a new stream but evaluation triggered only when terminal operation invoked.
 - tuple: an immutable data structure of a finite ordered sequence of item. 
 - `var`: context sensitive term. Neither a type nor an universal keyword.
