@@ -29,6 +29,10 @@ In order to shrink deployment size of the Java applicative layer, run:
 A static class is NOT instantiated to call its method. At least one static method causes the class it belongs to to be 
 static.
 
+**Class methods (viz. `static`) get NOT the reference to `this` automatically, as opposed to instance methods!
+That is why you can NOT access a non-static field (*i.e.* instance variable/method) in a static context WITHOUT an 
+object reference.**
+
 
 ### power
 `Math.pow(<base>, <exponent>)`
