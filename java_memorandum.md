@@ -9,7 +9,7 @@ sed -i "set-env JAVA_HOME ‘/usr/lib/jvm/openjdk24/’" $E:HOME/.config/elvish/
 sed -i "set-env LD_LIBRARY ‘/usr/lib/jvm/openjdk24/lib/server’" $E:HOME/.config/elvish/rc.elv
 elvish (to regenerate running_command file from the current interactive shell emulator session)
 set paths = [$E:JAVA_HOME/bin $@paths]
-java --version
+java -version
 rm -v ~/Downloads/openjdk*.tar.gz
 ```
 *Nota bene*: `xbps-alternatives -l -g jdk` reports only those packages who were installed via the xbps package manager
@@ -23,6 +23,19 @@ In order to shrink deployment size of the Java applicative layer, run:
 - List: ordered collection of data
 - Stream: order may be imposed by the source of data, a prior or subsequent step in the functional pipeline.
     Use `<data_source>.parallelStream()` if you want to possibly return a stream run in parallel for performance concerns.
+
+
+## Documentation
+run `javadoc -author -version <package>/<class>` and opens the class with your browser to access the generated doc.
+Doc comments are implemented using `/** */`. 
+Adds the following tags to properly document your class/interface/enum:
+- `@author` <your_name> to sign your work.
+- `@version` <numerotation>
+- `@deprecated` <notice>
+- `@see` <link> for a "See also" subsection
+
+- Where? Write doc comments just before a class or a method to bind them to the symbol.
+*Nota Bene*: remember that yet-to-be written unit tests will superseed most of doc comments.
 
 
 ### Static class
@@ -76,10 +89,12 @@ proceed with a explicit cast if the value is included in the allowed range of th
 
 
 ### Reference types
-- class
-- enum
-- record
-- array.
+- classes
+- enums
+- records
+- arrays
+- annotations.
+
 
 ### Utilitary method
 Make the methods static and call them with unary operator in stead of the resolution scope one. Indeed, the latter 
@@ -93,12 +108,25 @@ Each numeric primitive type has a corresponding class that provide useful method
 - int: Integer
 - long: Long.
 
+* Autoboxing is the automatic conversion between a primitive type and its own wrapper type.
+* Unboxing: opposite operation. The compiler converts a wrapper type into its matching primitive one.
+
+
 ### Array
 An array is a data structure of **object** type that stores a fixed-size, ordered collection of elements of the same type.
 Those elements are stored in contiguous memory locations.
 `Arrays` type provide access to sorting and searching methods.
 
 `ArrayList<String>`'s instance is mutable conversely to `List.of()` or `List.copyOf()`.
+
+1. Beware of initial values for reference type
+```
+int[][] matrix = new int[10][];
+System.out.println(matrix[0]); // Will print `null` and not `0`
+```
+That is because an array of arrays is a special form of `java.lang.Object`. `matrix` reference is not instantiated yet,
+that is there is no object created in memory, hence, it returns the Object's default value of `null`.
+As a side note, `new int[10]` is an array of the primitive type `int`, which is initialized to `0`.
 
 
 ### Switch
@@ -290,7 +318,8 @@ Declare into the entry-point `System.setErr(System.out);` to redirect error cana
 ### Lexikon
 - API: a suite of pre-defined types.
 - Destructuring: create a local variable with values extracted from an object. 
-- Encapsulation: data abstraction (using access modifiers).
+- Encapsulation: data abstraction (using access modifiers) to ensure that data can only be manipulated via your code.
+                 Hence, you control how external classes interact with your internal state (*viz.* data).
 - Expression: as opposed to statements, performs computations and return a result. 
 - Functional interface: provides target types for λ expressions and method references. Holds a single abstract method.
 - Guarded pattern: conditional arm.
