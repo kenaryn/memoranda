@@ -24,6 +24,21 @@ In order to shrink deployment size of the Java applicative layer, run:
 - Stream: order may be imposed by the source of data, a prior or subsequent step in the functional pipeline.
     Use `<data_source>.parallelStream()` if you want to possibly return a stream run in parallel for performance concerns.
 
+# Java Memory Model (JMM)
+Java adopts the LIFO (*viz* Last In First Out) model.
+All primitive types are pushed on the top of the stack whereas the memory location storing the values of reference types
+are pushed on the heap besides their actual reference being pushed within the frame's function where they are declared
+on the stack.
+
+When declaring two or more variables of a wrapper type holding the same value, a optimization can be made to reduce
+the memory footprint by allocating the same value only once in a Integer (for example) pool, iif the value is comprised
+between -128 and 127.
+
+The same applies for strings. When a String literal is declared and initialized, the compiler allocates a String pool
+and compare the subsequent literal strings to the existing one. If they match, the JVM returns the reference to that
+same String object's reference in stead of allocating and creating a new reference, all in order to shrink the memory
+footprint of the program.
+
 
 ## Documentation
 run `javadoc -author -version <package>/<class>` and opens the class with your browser to access the generated doc.
@@ -310,9 +325,18 @@ The most complex kind of gatherer is a parallelizable stateful one. It is compos
 3. Combine: merge multiple partial states
 4. Finish: take the collective state and push it downstream.
 
+### String
+`String.intern()` puts the string into the String pool and return that Object's reference. Can be combined with a
+comparison operator, a String literal and a instantiated String *via* its constructor.
+
 
 ### Error redirection
 Declare into the entry-point `System.setErr(System.out);` to redirect error canal towards the standard output one.
+
+### Regex
+- `\\p{P}`: punctuation mark
+- `\\s`: whitespace, tab
+- `\\.`: actual dot.
 
 
 ### Lexikon
@@ -328,6 +352,7 @@ Declare into the entry-point `System.setErr(System.out);` to redirect error cana
 - Package: a named group of related types (*i.e.* class, record, enum, interface).
 - Programming: forming good abstractions and putting things together to minimize complexity.
 - Reference: variable, field (of a class), or component (or a record)
+- Regular expression: characters' sequence that defines a search pattern.
 - Static typing: relates to type verification and not type specification.
 - tuple: an immutable data structure of a finite ordered sequence of item. 
 - `var`: context sensitive term. Neither a type nor an universal keyword.
