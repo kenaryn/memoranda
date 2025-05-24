@@ -52,3 +52,20 @@ template. So it depends what you're trying to achieve."
 - then click `File/Invalidate Caches/Invalidate and Restart` to ensure that the `deps.edn` file is properly regenerated
 and the project's context actually reloaded.
 - Finally, run `rm -rf ~/.m2/repository/org/clojure` to delete cached Clojure JAR
+
+
+### Clojure CLI flags
+- `-M` means "main options" and `-m` specifies the "main namespace" to run.
+- `-X` means "execute (function)" and `:exec-fn` specifies which fn to execute and `:exec-args` specifies any default 
+arguments.
+
+
+### Exploring the REPL
+- Run `(require '[clojure.repl :refer :all])` to bring that namespace into the current context a list of helpful functions (*e.g.*
+`dir`, `source`, `find-doc`, `apropos`).
+When looking for a function whose description is comprised of several key words, try this out:
+`(find-doc "(?=.*stack)(?=.*trace)(?=.*exception)")` and it will return `clojure.repl/pst`.
+
+
+### Basics
+- `def`: defines a var (viz. a constant value or a function). Litteral representation: `#'`
