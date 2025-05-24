@@ -48,8 +48,8 @@ template. So it depends what you're trying to achieve."
 8. Focus on your program's tab and push Shift + F10
 
 *Nota Bene*: 
-- select `Build/Rebuild project` 
-- then click `File/Invalidate Caches/Invalidate and Restart` to ensure that the `deps.edn` file is properly regenerated
+- Select `Build/Rebuild project` 
+- Then click `File/Invalidate Caches/Invalidate and Restart` to ensure that the `deps.edn` file is properly regenerated
 and the project's context actually reloaded.
 - Finally, run `rm -rf ~/.m2/repository/org/clojure` to delete cached Clojure JAR
 
@@ -60,6 +60,7 @@ and the project's context actually reloaded.
 arguments.
 
 
+## REPL
 ### Exploring the REPL
 - Run `(require '[clojure.repl :refer :all])` to bring that namespace into the current context a list of helpful functions (*e.g.*
 `dir`, `source`, `find-doc`, `apropos`).
@@ -67,5 +68,29 @@ When looking for a function whose description is comprised of several key words,
 `(find-doc "(?=.*stack)(?=.*trace)(?=.*exception)")` and it will return `clojure.repl/pst`.
 
 
+### Compiler connection to REPL
+You need to introduce into current context (or requiring a dependency into runtime environment) a namespace to be able
+to invok its functions. *e.g.*:
+- Main entry point is located here: `<project_root>src/greet/core.clj` and contains the following:
+```
+(ns greet.core)
+(defn -main []
+  (println "Hi people!"))
+```
+
+- Now in the input field (viz. the bottom-right window of the screen), type:
+```
+(require 'greet.core)
+(greet.core/-main)
+```
+to carry out the S-expressions evaluation between the reader and the compiler.
+
+*Nota bene*: there is indeed a side-effect when requiring the namespace, that is why the compiler return `nil` value.
+
+
 ### Basics
 - `def`: defines a var (viz. a constant value or a function). Litteral representation: `#'`
+
+
+## Lexikon
+- form: complete expression, that is read by the Reader and stand for a compilation unit in Clojure
