@@ -106,3 +106,8 @@ the names in the outer context, like so: `(let [name value] (<coding_using_that_
 ## Lexikon
 - form: complete expression, that is read by the Reader and stand for a compilation unit in Clojure
 - Cursive: brings the same Clojure compiler to IntelliJ than the one installed on the machine.
+
+
+### IntelliJ - Settings
+- **It is necessary to add the following entry to `deps.edn` to let Cursive know about `src` folder being the source
+root tree: `:paths ["src"]`**
