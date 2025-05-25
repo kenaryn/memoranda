@@ -88,9 +88,21 @@ to carry out the S-expressions evaluation between the reader and the compiler.
 *Nota bene*: there is indeed a side-effect when requiring the namespace, that is why the compiler return `nil` value.
 
 
+### Var
+- When binding an anonymous function to a name (*e.g.* `(def salute (fn [name] (str "Hi, " name)))`), `Salute` is
+henceforth a public Var that points to the function, which will be invokable, because a function deref a Var.
+
+
 ### Basics
-- `def`: defines a var (viz. a constant value or a function). Litteral representation: `#'`
+- `def`: defines a var (*viz.* a constant value or a function), binding a name to a value. Litteral representation: `#'`
+- `(ns-publics 'user)`: shows all the top-level Vars (`def` and `defn`) that you have defined into `user` ns.
+- `let`: binds symbols to values in a lexical scope, which creates a new context for names that take precedence over
+the names in the outer context, like so: `(let [name value] (<coding_using_that_name(s)>))`
+- Names' spelling: a underscore must be used in filenames whereas a hyphen is used in namespaces. *e.g.*
+                   - Filename: `user_defs.clj`
+                   - Namespace: `resources.user-defs` 
 
 
 ## Lexikon
 - form: complete expression, that is read by the Reader and stand for a compilation unit in Clojure
+- Cursive: brings the same Clojure compiler to IntelliJ than the one installed on the machine.
