@@ -107,6 +107,10 @@ the names in the outer context, like so: `(let [name value] (<coding_using_that_
 - form: complete expression, that is read by the Reader and stand for a compilation unit in Clojure
 - Cursive: brings the same Clojure compiler to IntelliJ than the one installed on the machine.
 
+### Macro - first aid kit
+Using :require in a namespace declaration is actually just passing an argument to a macro (the macro called ns). 
+The function require is mostly a convenience for working at the REPL.  It is rarely used in actual file-based code though.
+
 
 ### IntelliJ - Settings
 - **It is necessary to add the following entry to `deps.edn` to let Cursive know about `src` folder being the source
