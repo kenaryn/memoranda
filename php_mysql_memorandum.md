@@ -451,3 +451,67 @@ Navigate through `\Ds` namespace to access new data structures; *e.g.*
   $vec->push(...['amlk', 'aurele']);
   $vec->push('myrank' => 4);
 </code></pre>
+
+
+I have both phpmyadmin and apache installed and mysqld in /var/service.
+Running sudo sv status mysql returns that mysql is running.
+My apache config file located at /etc/apache/httpd.conf includes the line: `Listen 80`
+
+Then I go to http://localhost/phpmyadmin but it returns the default page of apache: Object not Found!
+How do I resolve my setting to fix phpmyadmin ?
+
+
+The issue is that Apache doesn’t know where to find phpMyAdmin—the /phpmyadmin URL isn’t mapped to the actual files on disk. 
+
+Since you’re on Void Linux, and phpmyadmin is installed via xbps, the files are typically located in: 
+/usr/share/webapps/phpmyadmin
+ 
+But Apache’s default document root (/var/www/htdocs) doesn’t include it, and no alias or symlink is set up yet. 
+ 
+✅ Solution: Create an Alias in Apache 
+
+    Create a dedicated Apache config file for phpMyAdmin (cleaner than editing httpd.conf):
+     
+sudo mkdir -p /etc/httpd/conf.d
+sudo tee /etc/httpd/conf.d/phpmyadmin.conf <<'EOF'
+Alias /phpmyadmin "/usr/share/webapps/phpmyadmin"
+
+<Directory "/usr/share/webapps/phpmyadmin">
+    Options FollowSymLinks
+    AllowOverride All
+    Require all granted
+</Directory>
+EOF
+ 
+
+    💡 This tells Apache: “When someone visits /phpmyadmin, serve files from /usr/share/webapps/phpmyadmin.” 
+     
+
+    Ensure Apache loads .conf files from conf.d
+    Check your main config /etc/apache/httpd.conf for a line like: 
+    Include /etc/httpd/conf.d/*.conf
+     
+
+    If it’s missing, add it near the end of the file. 
+
+    Restart Apache to apply changes: 
+     
+sudo sv restart apache
+ 
+
+    Test in your browser:
+    http://localhost/phpmyadmin
+     
+🔍 Troubleshooting Tips 
+
+    Verify the phpMyAdmin path exists:
+ls /usr/share/webapps/phpmyadmin/index.php
+ 
+ 
+Check Apache error logs if it still fails:
+    sudo tail -f /var/log/httpd/error_log
+     
+    Ensure PHP is working: create a /var/www/htdocs/test.php with <?php phpinfo(); ?> and visit http://localhost/test.php.
+     
+
+Once done, you should see the phpMyAdmin login page. Make sure MariaDB/MySQL has a root password set (or use socket authentication if configured). Let me know if you get a blank page or PHP errors—those usually mean PHP modules are missing (e.g., php-mysqli). 

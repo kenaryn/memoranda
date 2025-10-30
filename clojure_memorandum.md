@@ -108,8 +108,8 @@ the names in the outer context, like so: `(let [name value] (<coding_using_that_
 - Cursive: brings the same Clojure compiler to IntelliJ than the one installed on the machine.
 
 ### Macro - first aid kit
-Using :require in a namespace declaration is actually just passing an argument to a macro (the macro called ns). 
-The function require is mostly a convenience for working at the REPL.  It is rarely used in actual file-based code though.
+Using `:require` in a namespace declaration is actually merely passing an argument to a macro (*viz.* `ns`). 
+The function `require` is mostly a convenience for working at the REPL.  It is rarely used in actual file-based code though.
 
 
 ### IntelliJ - Settings
