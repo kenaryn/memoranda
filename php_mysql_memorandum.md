@@ -515,3 +515,28 @@ Check Apache error logs if it still fails:
      
 
 Once done, you should see the phpMyAdmin login page. Make sure MariaDB/MySQL has a root password set (or use socket authentication if configured). Let me know if you get a blank page or PHP errors—those usually mean PHP modules are missing (e.g., php-mysqli). 
+
+
+## Add an alias for Apache
+
+1. Add the following snippet into `/etc/httpd/conf.d/phpmyadmin.conf`:
+```
+Alias /phpmyadmin "/usr/share/webapps/phpMyAdmin"
+
+<Directory "/usr/share/webapps/phpMyAdmin">
+    Options FollowSymLinks
+    AllowOverride All
+    Require all granted
+    DirectoryIndex index.php
+</Directory>
+```
+
+2. Include this new custom config file into those loaded by Apache's own configuration:
+`Include /etc/httpd/conf.d/*.conf`
+
+3. Restart Apache to apply changes:
+sudo sv restart apache
+
+
+_Nota Bene:_ Check Apache errors'log to help troobleshooting:
+`sudo tail -f /var/log/httpd/error_log`
