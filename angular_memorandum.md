@@ -89,3 +89,12 @@ export class Baleine implements OnInit, AfterContentInit, AfterContentChecked, A
   ngOnDestroy(): void {}
 }
 ```
+
+### Difference between Array and []
+The `readonly` type modifier can only be applied to tuple-based syntax types. This is *not* a general-purpose type operator:
+```angular2html
+let err1: readonly Set<number>;  // error
+let err2: readonly Array<boolean>; // error
+
+let fine: readonly boolean[];  // works fine
+```
