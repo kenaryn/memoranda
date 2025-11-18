@@ -81,11 +81,11 @@ import { OnInit, AfterContentInit, AfterContentChecked, AfterViewInit, AfterView
 ```angular2html
 export class Baleine implements OnInit, AfterContentInit, AfterContentChecked, AfterViewInit, AfterViewChecked, OnDestroy {
 
-  public ngOnInit(): void {}
-  public ngAfterContentInit(): void {}
-  public ngAfterContentChecked(): void {}
-  public ngAfterViewInit(): void {}
-  public ngAfterViewChecked(): void {}
-  public ngOnDestroy(): void {}
+  ngOnInit(): void {}
+  ngAfterContentInit(): void {}
+  ngAfterContentChecked(): void {}
+  ngAfterViewInit(): void {}
+  ngAfterViewChecked(): void {}
+  ngOnDestroy(): void {}
 }
 ```
