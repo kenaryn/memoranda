@@ -103,3 +103,16 @@ let fine: readonly boolean[];  // works fine
 ### Politique d'accès
 Pour rendre une méthode utilitaire d'un composant accessible à son template, utilisez un modificateur de type `protected`. \
 En effet, la politique d'accès `private` est réservée à la classe elle-même.
+
+
+### Objet litéral et propriétés calculées
+Lorsque vous retournez un objet litéral depuis une méthode et insérer une paire de parenthèses pour effectuer un calcul, soit afin de garantir la préséance des opérateurs ou assurer la lisibilité dudit calcul, une erreur inattendue survient.
+
+De là, le compilateur peut traiter la première valeur de l'objet retourné comme une méthode qu'il faut invoquer avec la computation suivante, analysée grammaticalement comme un tuple d'arguments. \
+Bien sûr, la première propriété ne disposant pas de signature d'appel (ce n'est qu'une valeur), une erreur est levée.
+Il vous est donc nécessaire de préfixer ce calcul par l'ajout d'une propriété calculée, soit un nouvel label décrivant le calcul et suivi du morphème `:`. *e.g.*:
+```angular2html
+return { distanceKmTotale, consommationMoyenne: (consommationPour100Km / this.voyages.length) };  
+```
+
+Ici, la propriété calculée `consommationMoyenne` est ajoutée pour permettre l'analyse grammaticale correcte de l'expression entre parenthèses suivante.
