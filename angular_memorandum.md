@@ -98,3 +98,8 @@ let err2: readonly Array<boolean>; // error
 
 let fine: readonly boolean[];  // works fine
 ```
+
+
+### Politique d'accès
+Pour rendre une méthode utilitaire d'un composant accessible à son template, utilisez un modificateur de type `protected`. \
+En effet, la politique d'accès `private` est réservée à la classe elle-même.
